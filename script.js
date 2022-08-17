@@ -1,13 +1,34 @@
 // comparer 2 tableaux
 let listNumeroChoisi = [];
-let listesNumero = [];
-let nbrNumeroSelectionne = 0;
+let listesTousNumero = [];
 const effacerBtn = document.getElementById("reset").addEventListener("click",resetGrille);
 
 const tirageBtn = document.getElementById("tirage");
 const btnAjouter= document.querySelector('#btnAjouter');
 btnAjouter.addEventListener('click',(e)=>{
-    ajouterListNumero([1,2,3,4,5]);
+    let elem = document.querySelector(".alert");
+    if(listNumeroChoisi.length===5 ){
+        if(listesTousNumero.length<5){
+            ajouterListNumero(listNumeroChoisi);
+        listesTousNumero.push(listNumeroChoisi);
+        }
+        else{
+            elem.classList.remove('invisible');
+            elem.textContent="You can only get 5 tickets";
+            setTimeout(()=>{
+                elem.classList.add("invisible");
+            },3000);
+        }
+        
+    }
+    else{
+        
+        elem.classList.remove('invisible');
+        elem.textContent="Please choose 5 numbers to add";
+        setTimeout(()=>{
+            elem.classList.add("invisible");
+        },3000);
+    }
 });
 console.log(tirageBtn);
 tirageBtn.addEventListener("click",tirage);
@@ -43,8 +64,6 @@ function creerGrilleLotoHtml(){
     }
     // document.getElementById("grilleContainer").appendChild(grille);
 }
-
-
 
 function ajouterEventNumero(){
     let listElementNumero = document.getElementsByClassName("numero");
@@ -117,7 +136,7 @@ function ajouterListNumero(listeNumero){
     if(listeNumero.length==5){
         let li = document.createElement('li');
         let listNumElem = document.querySelector(".list-group");
-        li.className =`${listesNumero.length} list-group-item d-flex justify-content-between align-items-center`;
+        li.className =`${listesTousNumero.length+1} list-group-item d-flex justify-content-between align-items-center`;
         let elem="";
         for(let num of listeNumero){
             elem+=`${num} `;
@@ -126,9 +145,13 @@ function ajouterListNumero(listeNumero){
         li.innerHTML=elem;
         listNumElem.appendChild(li);
     }
-    
+}
 
-
+function ajouterBadge(liste,pos){
+    let elem = document.createElement('span');
+    elem.className="badge badge-pill badge-primary";
+    elem.textContent=liste.length;
+    document.querySelector(`.${pos}`).appendChild(elem);
 }
 function suprimmerNumero(numero){
     if (listNumeroChoisi.length >0) {
