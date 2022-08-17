@@ -11,6 +11,7 @@ btnAjouter.addEventListener('click',(e)=>{
         if(listesTousNumero.length<5){
             ajouterListNumero(listNumeroChoisi);
         listesTousNumero.push(listNumeroChoisi);
+        console.log(listesTousNumero);
         }
         else{
             elem.classList.remove('invisible');
@@ -30,8 +31,8 @@ btnAjouter.addEventListener('click',(e)=>{
         },3000);
     }
 });
-console.log(tirageBtn);
-tirageBtn.addEventListener("click",tirage);
+// console.log(tirageBtn);
+tirageBtn.addEventListener("click",tirageAll);
 
 function comparerNumeros(numerosTirage,numerosJouer){
     let nbrBonNumero = 0;
@@ -112,8 +113,8 @@ function ajouterEventNumero(){
                 }
             }
             
-            console.log(listNumeroChoisi);
-            afficherNumeroChoisi();
+            // console.log(listNumeroChoisi);
+            // afficherNumeroChoisi();
         });
         
     }
@@ -151,7 +152,18 @@ function ajouterBadge(liste,pos){
     let elem = document.createElement('span');
     elem.className="badge badge-pill badge-primary";
     elem.textContent=liste.length;
-    document.querySelector(`.${pos}`).appendChild(elem);
+    document.querySelectorAll('li')[pos].appendChild(elem);
+
+}
+
+function supprimerBadges(){
+    let liste = document.querySelectorAll('.list-group-item span');
+    if(liste.length>0){
+        for(const item of liste){
+            item.remove();
+        }
+    }
+    
 }
 function suprimmerNumero(numero){
     if (listNumeroChoisi.length >0) {
@@ -178,7 +190,7 @@ function resetGrille(){
         grille[i].classList.remove('chosen');
         
     }
-    afficherNumeroChoisi();
+    // afficherNumeroChoisi(listNumeroChoisi);
 }
 document.getElementById("aleatoire").addEventListener("click",e =>{
 
@@ -190,7 +202,7 @@ document.getElementById("aleatoire").addEventListener("click",e =>{
         }
     }
     updateGrille();
-    console.log(listNumeroChoisi);
+    // console.log(listNumeroChoisi);
 });
 function randomNumero(){
     let liste = [];
@@ -206,44 +218,46 @@ function updateGrille(){
     for (let i = 0; i < listNumeroChoisi.length; i++) {
         // console.log(document.getElementsByClassName(""+listNumeroChoisi[i]));
         let div = document.getElementsByClassName(""+(listNumeroChoisi[i]))
-        console.log(div);
+        // console.log(div);
         div[0].classList.add('chosen');
 
         
     }
-    afficherNumeroChoisi();
+    // afficherNumeroChoisi(listNumeroChoisi);
 }
 
-const afficherNumeroChoisi = () => {
-    listNumeroChoisi.sort(function(a,b) {
-        return a-b;
-    });
-    const p = document.getElementById("choisi");
-    p.textContent="vos numéros : ";
-    listNumeroChoisi.forEach((numero)=>{
-        p.textContent+= `${numero}  `
-    })
+// const afficherNumeroChoisi = (liste) => {
+//     liste.sort(function(a,b) {
+//         return a-b;
+//     });
+//     const res = document.querySelector(".resultats");
+//     res.textContent="vos numéros : ";
+//     listNumeroChoisi.forEach((numero)=>{
+//         res.textContent+= `${numero}  `;
+//     })
+//     res.classList.remove('invisible');
 
-};
+// };
 
 function afficherNumeroTires(numeros){
     numeros.sort(function(a,b){
         return a-b;
     });
-    const p = document.getElementById("resultat");
+    const p = document.querySelector(".resultats");
     p.textContent="tirage :";
     numeros.forEach((numero)=>{
         p.textContent+= `${numero}  `;
     });
+    p.classList.remove('invisible');
 }
 
 function tirage(){
-    console.log("test");
+    // console.log("test");
     if(listNumeroChoisi.length===5){
         
         let numeroTires = randomNumero();
         let resultat = comparerNumeros(numeroTires,listNumeroChoisi);  
-        console.log(resultat);
+        // console.log(resultat);
         afficherNumeroTires(numeroTires);
         let pComparaison = document.getElementById("comparaison");
         pComparaison.textContent = `Vous avez ${resultat.length} bon(s) numéro(s): `;
@@ -253,6 +267,29 @@ function tirage(){
     }
     else{
         console.log("error, need 5 num");
+    }
+}
+
+function tirageAll(){
+    supprimerBadges()
+    let alert = document.querySelector(".alert")
+    if (listesTousNumero.length>0) {
+        let numeroTires = randomNumero();
+        afficherNumeroTires(numeroTires);
+        for(let i=0;i<listesTousNumero.length;i++){
+            let resultat = comparerNumeros(numeroTires, listesTousNumero[i]);
+            ajouterBadge(resultat,i);
+
+
+        }
+    }
+    else{
+
+        alert.classList.remove('invisible');
+        alert.textContent="You need to get at least one ticket";
+        setTimeout(()=>{
+            alert.classList.add("invisible");
+        },5000);
     }
 }
 creerGrilleLotoHtml();
