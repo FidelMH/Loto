@@ -1,9 +1,14 @@
 // comparer 2 tableaux
 let listNumeroChoisi = [];
+let listesNumero = [];
 let nbrNumeroSelectionne = 0;
 const effacerBtn = document.getElementById("reset").addEventListener("click",resetGrille);
 
 const tirageBtn = document.getElementById("tirage");
+const btnAjouter= document.querySelector('#btnAjouter');
+btnAjouter.addEventListener('click',(e)=>{
+    ajouterListNumero([1,2,3,4,5]);
+});
 console.log(tirageBtn);
 tirageBtn.addEventListener("click",tirage);
 
@@ -106,6 +111,24 @@ function ajouterNumero(numero){
         return true;
     }
     return false;
+}
+
+function ajouterListNumero(listeNumero){
+    if(listeNumero.length==5){
+        let li = document.createElement('li');
+        let listNumElem = document.querySelector(".list-group");
+        li.className =`${listesNumero.length} list-group-item d-flex justify-content-between align-items-center`;
+        let elem="";
+        for(let num of listeNumero){
+            elem+=`${num} `;
+        }
+        
+        li.innerHTML=elem;
+        listNumElem.appendChild(li);
+    }
+    
+
+
 }
 function suprimmerNumero(numero){
     if (listNumeroChoisi.length >0) {
