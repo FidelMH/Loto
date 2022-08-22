@@ -5,6 +5,11 @@ const effacerBtn = document.getElementById("reset").addEventListener("click",res
 
 const tirageBtn = document.getElementById("tirage");
 const btnAjouter= document.querySelector('#btnAjouter');
+const btnResetTickets= document.querySelector('#reset-tickets');
+
+btnResetTickets.addEventListener('click', (e) =>{
+    resetTickets();
+})
 btnAjouter.addEventListener('click',(e)=>{
     let elem = document.querySelector(".alert");
     if(listNumeroChoisi.length===5 ){
@@ -135,16 +140,16 @@ function ajouterNumero(numero){
 
 function ajouterListNumero(listeNumero){
     if(listeNumero.length==5){
-        let li = document.createElement('li');
-        let listNumElem = document.querySelector(".list-group");
-        li.className =`${listesTousNumero.length+1} list-group-item d-flex justify-content-between align-items-center`;
+       
+        let li = document.querySelectorAll(".list-group-item").item(listesTousNumero.length);
+        console.log("hello",li)
         let elem="";
         for(let num of listeNumero){
             elem+=`${num} `;
         }
         
-        li.innerHTML=elem;
-        listNumElem.appendChild(li);
+        li.textContent=elem;
+        // listNumElem.appendChild(li);
     }
 }
 
@@ -156,6 +161,13 @@ function ajouterBadge(liste,pos){
 
 }
 
+function resetTickets(){
+    let lis = document.querySelectorAll("li");
+    for(const elem of lis){
+        elem.innerText='-';
+    }
+    listesTousNumero = [];
+}
 function supprimerBadges(){
     let liste = document.querySelectorAll('.list-group-item span');
     if(liste.length>0){

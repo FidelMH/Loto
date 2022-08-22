@@ -1,42 +1,49 @@
+ body{
+    background-color: #fff;
+ }
+h1{
+    font-size: 3rem;
+    color: #007bff;
+    text-align: center;
+}
 #grilleContainer{
-    width: 26rem;
+    width: 700px;
     display: flex;
     flex-direction: column;
     justify-content: center;margin: auto;
     padding-top: 1rem;
 }
 #grille{
-    /* display: grid;
-    grid-template-columns: repeat(10,1fr); */
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(10,1fr);
+    /* display: flex; */
+    /* flex-direction: row; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* flex-wrap: wrap; */
     gap: 10px;
     /* justify-content: center; */
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
     margin-bottom: 1rem;
 }
-
+section{
+    border-radius: 10px;
+    border: 1px solid #333;
+    padding: 3rem;
+    width: 100%;
+}
 .numero{
     /* border: 1px solid black; */
-    text-align: center;
     vertical-align: baseline;
     height: 2rem;
     width: 2rem;
-    background-color: dodgerblue;
+    background-color: #b8daff;
     border-radius: 5px;
-    color: aliceblue;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.numero {
+    color: rgb(31, 31, 31);
+    text-align: center;
     cursor: pointer;
 }
+
 
 .chosen{
     background-color: brown;
@@ -45,10 +52,12 @@
 
 button{
     margin-bottom: 10px;
-    width: 150px;
     
 }
 
+#joueurContainer{
+    margin-bottom: 2rem;
+}
 
 /* Animations */
 .animCase{
